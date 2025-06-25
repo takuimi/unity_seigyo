@@ -1,23 +1,26 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class EnergyManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject target;
+    public GameObject goal;
     public Image energyBar;
     public Text pointText;
     public GameObject axis_displacement;
     public GameObject axis_speed;
     public GameObject axis_acceleration;
-    public float maxLosePoint = 100f;
+    public GameObject gameOverCanvas;
+    public GameObject gameClearCanvas;
+    public float TargetOfError = 0.5f;
 
     [Range(0.1f, 1f)]
-    public float pointSmoothingFactorS = 0.1f; // ƒ¿
+    public float pointSmoothingFactorS = 0.1f; // Î±
     [Range(0.1f, 1f)]
-    public float pointSmoothingFactorM = 0.1f; // ƒ¿
+    public float pointSmoothingFactorM = 0.1f; // Î±
     [Range(0.1f, 1f)]
-    public float pointSmoothingFactorL = 0.1f; // ƒ¿
+    public float pointSmoothingFactorL = 0.1f; // Î±
 
     private Vector3 prevPlayerPos;
     private Vector3 prevTargetPos;
@@ -37,9 +40,8 @@ public class EnergyManager : MonoBehaviour
     private float speedAngle = 0f;
     private float accelerationAngle = 0f;
 
-    private float losePoint = 0f;
-    private float rawRemainingEnergy = 1f;
-    private float filteredRemainingEnergy = 1f;
+    private float DegreeOfError = 0f;
+    private float RemainingEnergy = 1000f;
 
     private float pointBuffer = 0f;
     private int point = 0;
@@ -48,10 +50,22 @@ public class EnergyManager : MonoBehaviour
 
     void Start()
     {
+        //ãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼ã®ä½ç½®ã‚’èª­ã¿è¾¼ã¿
         if (player != null && target != null)
         {
             prevPlayerPos = player.transform.position;
             prevTargetPos = target.transform.position;
+        }
+
+        //ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’éè¡¨ç¤ºã«ã™ã‚‹
+        if (gameOverCanvas != null)
+        {
+            gameOverCanvas.SetActive(false); // ã‚²ãƒ¼ãƒ é–‹å§‹æ™‚ã«éè¡¨ç¤º
+        }
+
+        if (gameClearCanvas != null)
+        {
+            gameClearCanvas.SetActive(false); // ã‚²ãƒ¼ãƒ é–‹å§‹æ™‚ã«éè¡¨ç¤º
         }
     }
 
@@ -65,89 +79,108 @@ public class EnergyManager : MonoBehaviour
         Vector3 currentPlayerPos = player.transform.position;
         Vector3 currentTargetPos = target.transform.position;
 
-        // ‹^—”÷•ª‚Å‘¬“xŒvZiƒ[ƒpƒXƒtƒBƒ‹ƒ^[•t‚«j
-        Vector3 rawPlayerVel = (currentPlayerPos - prevPlayerPos) / deltaTime;
-        Vector3 rawTargetVel = (currentTargetPos - prevTargetPos) / deltaTime;
-
-        playerVelocity = pointSmoothingFactorL * playerVelocity + (1f - pointSmoothingFactorL) * rawPlayerVel;
-        targetVelocity = pointSmoothingFactorL * targetVelocity + (1f - pointSmoothingFactorL) * rawTargetVel;
-
-        // ‹^—”÷•ª‚Å‰Á‘¬“xŒvZiƒ[ƒpƒXƒtƒBƒ‹ƒ^[•t‚«j
-        Vector3 rawPlayerAcc = (playerVelocity - prevPlayerVelocity) / deltaTime;
-        Vector3 rawTargetAcc = (targetVelocity - prevTargetVelocity) / deltaTime;
-
-        playerAcceleration = pointSmoothingFactorL * playerAcceleration + (1f - pointSmoothingFactorL) * rawPlayerAcc;
-        targetAcceleration = pointSmoothingFactorL * targetAcceleration + (1f - pointSmoothingFactorL) * rawTargetAcc;
-
-        // —İÏ•ÏˆÊ
-        playerDisplacement += Vector3.Distance(currentPlayerPos, prevPlayerPos);
-        targetDisplacement += Vector3.Distance(currentTargetPos, prevTargetPos);
-
-        float playerSpeed = playerVelocity.magnitude;
-        float targetSpeed = targetVelocity.magnitude;
-        float accelerationDiff = playerAcceleration.magnitude - targetAcceleration.magnitude;
-
-        float displacementDiff = playerDisplacement - targetDisplacement;
-        float speedDiff = playerSpeed - targetSpeed;
-
-
-        //axis_displacement‚ğ‰ñ“]‚·‚éÛ‚Ì”ÍˆÍ‚ğ§ŒÀ‚·‚é(UI‚Ì‹——£ƒ[ƒ^‚Ì§Œä)
-        float clamped_displacementDiff = Mathf.Clamp(displacementDiff, -10f, 10f);
-        //-10 ¨ -90‹, 0 ¨ 0‹, 10 ¨ 90‹ ‚Éƒ}ƒbƒsƒ“ƒO
-        float displacementAngle = Mathf.Lerp(-90f, 90f, (clamped_displacementDiff + 10f) / 20f);
-        //Z²‰ñ“]
-        axis_displacement.transform.localEulerAngles = new Vector3(0f, 0f, displacementAngle);
-
-        //axis_speed‚ğ‰ñ“]‚·‚éÛ‚Ì”ÍˆÍ‚ğ§ŒÀ‚·‚é(UI‚Ì‹——£ƒ[ƒ^‚Ì§Œä)
-        float clamped_speedDiff = Mathf.Clamp(speedDiff, -10f, 10f);
-        //-10 ¨ -90‹, 0 ¨ 0‹, 10 ¨ 90‹ ‚Éƒ}ƒbƒsƒ“ƒO
-        float rawspeedAngle = Mathf.Lerp(-90f, 90f, (clamped_speedDiff + 10f) / 20f);
-        //ƒXƒ€[ƒWƒ“ƒO
-        speedAngle = pointSmoothingFactorM * speedAngle + (1f - pointSmoothingFactorM) * rawspeedAngle;
-        //Z²‰ñ“]
-        axis_speed.transform.localEulerAngles = new Vector3(0f, 0f, speedAngle);
-
-        //axis_acceleration‚ğ‰ñ“]‚·‚éÛ‚Ì”ÍˆÍ‚ğ§ŒÀ‚·‚é(UI‚Ì‹——£ƒ[ƒ^‚Ì§Œä)
-        float clamped_accelerationDiff = Mathf.Clamp(accelerationDiff, -10f, 10f);
-        //-10 ¨ -90‹, 0 ¨ 0‹, 10 ¨ 90‹ ‚Éƒ}ƒbƒsƒ“ƒO
-        float rawaccelerationAngle = Mathf.Lerp(-90f, 90f, (clamped_accelerationDiff + 10f) / 20f);
-        //ƒXƒ€[ƒWƒ“ƒO
-        accelerationAngle = pointSmoothingFactorL * accelerationAngle + (1f - pointSmoothingFactorL) * rawaccelerationAngle;
-        //Z²‰ñ“]
-        axis_acceleration.transform.localEulerAngles = new Vector3(0f, 0f, accelerationAngle);
-
-       // ‰æ–Êƒ^ƒbƒ`‚Ü‚½‚ÍƒNƒŠƒbƒN‚ğŒŸoiPC / ƒXƒ}ƒz—¼‘Î‰j
-       if ((Input.GetMouseButtonDown(0) || Input.touchCount > 0))
-       {
-             hasTouched = true;
+        // ç”»é¢ã‚¿ãƒƒãƒã¾ãŸã¯ã‚¯ãƒªãƒƒã‚¯ã‚’æ¤œå‡ºï¼ˆPC / ã‚¹ãƒãƒ›ä¸¡å¯¾å¿œï¼‰
+        if ((Input.GetMouseButtonDown(0) || Input.touchCount > 0))
+        {
+           hasTouched = true;
         }
+
         if (hasTouched)
         {
-            // ƒGƒlƒ‹ƒM[Œ¸­ƒ|ƒCƒ“ƒg
-            losePoint = Mathf.Abs(1f * displacementDiff + 0.5f * speedDiff + 0.1f * accelerationDiff);
-
-            // ƒGƒlƒ‹ƒM[c—Êi¶’lj
-            rawRemainingEnergy = Mathf.Clamp01(1f - (losePoint / maxLosePoint));
-
-            // ƒGƒlƒ‹ƒM[ƒo[XV
-            if (energyBar != null)
+            // filteredRemainingEnergyãŒï¼ã§ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ã®è¡¨ç¤º
+            if (RemainingEnergy <= -1f && gameOverCanvas != null && !gameOverCanvas.activeSelf)
             {
-                // ’Ç‰ÁFƒXƒ€[ƒWƒ“ƒO
-                filteredRemainingEnergy = pointSmoothingFactorM * filteredRemainingEnergy + (1f - pointSmoothingFactorM) * rawRemainingEnergy;
-
-                // g—pF‚±‚¿‚ç‚ğg‚¤
-                energyBar.fillAmount = filteredRemainingEnergy;
+                gameOverCanvas.SetActive(true);
             }
 
-            // ƒ|ƒCƒ“ƒg‰ÁZˆ—
-            float PointGain = rawRemainingEnergy * deltaTime * 10f;
-            pointBuffer += PointGain;
-
-            if (pointBuffer >= 1f)
+            else if (Vector3.Distance(player.transform.position, goal.transform.position) < 1.0f)
             {
-                int gained = Mathf.FloorToInt(pointBuffer);
-                point += gained;
-                pointBuffer -= gained;
+                if (gameClearCanvas != null && !gameClearCanvas.activeSelf)
+                {
+                    gameClearCanvas.SetActive(true);
+                }
+            }
+
+            else
+            {
+
+                // ç–‘ä¼¼å¾®åˆ†ã§é€Ÿåº¦è¨ˆç®—ï¼ˆãƒ­ãƒ¼ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ä»˜ãï¼‰
+                Vector3 rawPlayerVel = (currentPlayerPos - prevPlayerPos) / deltaTime;
+                Vector3 rawTargetVel = (currentTargetPos - prevTargetPos) / deltaTime;
+
+                playerVelocity = pointSmoothingFactorL * playerVelocity + (1f - pointSmoothingFactorL) * rawPlayerVel;
+                targetVelocity = pointSmoothingFactorL * targetVelocity + (1f - pointSmoothingFactorL) * rawTargetVel;
+
+                // ç–‘ä¼¼å¾®åˆ†ã§åŠ é€Ÿåº¦è¨ˆç®—ï¼ˆãƒ­ãƒ¼ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ä»˜ãï¼‰
+                Vector3 rawPlayerAcc = (playerVelocity - prevPlayerVelocity) / deltaTime;
+                Vector3 rawTargetAcc = (targetVelocity - prevTargetVelocity) / deltaTime;
+
+                playerAcceleration = pointSmoothingFactorL * playerAcceleration + (1f - pointSmoothingFactorL) * rawPlayerAcc;
+                targetAcceleration = pointSmoothingFactorL * targetAcceleration + (1f - pointSmoothingFactorL) * rawTargetAcc;
+
+                // ç´¯ç©å¤‰ä½
+                playerDisplacement += Vector3.Distance(currentPlayerPos, prevPlayerPos);
+                targetDisplacement += Vector3.Distance(currentTargetPos, prevTargetPos);
+
+                float playerSpeed = playerVelocity.magnitude;
+                float targetSpeed = targetVelocity.magnitude;
+                float accelerationDiff = playerAcceleration.magnitude - targetAcceleration.magnitude;
+
+                float displacementDiff = playerDisplacement - targetDisplacement;
+                float speedDiff = playerSpeed - targetSpeed;
+
+
+                //axis_displacementã‚’å›è»¢ã™ã‚‹éš›ã®ç¯„å›²ã‚’åˆ¶é™ã™ã‚‹(UIã®è·é›¢ãƒ¡ãƒ¼ã‚¿ã®åˆ¶å¾¡)
+                float clamped_displacementDiff = Mathf.Clamp(displacementDiff, -10f, 10f);
+                //-10 â†’ -90Â°, 0 â†’ 0Â°, 10 â†’ 90Â° ã«ãƒãƒƒãƒ”ãƒ³ã‚°
+                float displacementAngle = Mathf.Lerp(-90f, 90f, (clamped_displacementDiff + 10f) / 20f);
+                //Zè»¸å›è»¢
+                axis_displacement.transform.localEulerAngles = new Vector3(0f, 0f, displacementAngle);
+
+                //axis_speedã‚’å›è»¢ã™ã‚‹éš›ã®ç¯„å›²ã‚’åˆ¶é™ã™ã‚‹(UIã®è·é›¢ãƒ¡ãƒ¼ã‚¿ã®åˆ¶å¾¡)
+                float clamped_speedDiff = Mathf.Clamp(speedDiff, -10f, 10f);
+                //-10 â†’ -90Â°, 0 â†’ 0Â°, 10 â†’ 90Â° ã«ãƒãƒƒãƒ”ãƒ³ã‚°
+                float rawspeedAngle = Mathf.Lerp(-90f, 90f, (clamped_speedDiff + 10f) / 20f);
+                //ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°
+                speedAngle = pointSmoothingFactorM * speedAngle + (1f - pointSmoothingFactorM) * rawspeedAngle;
+                //Zè»¸å›è»¢
+                axis_speed.transform.localEulerAngles = new Vector3(0f, 0f, speedAngle);
+
+                //axis_accelerationã‚’å›è»¢ã™ã‚‹éš›ã®ç¯„å›²ã‚’åˆ¶é™ã™ã‚‹(UIã®è·é›¢ãƒ¡ãƒ¼ã‚¿ã®åˆ¶å¾¡)
+                float clamped_accelerationDiff = Mathf.Clamp(accelerationDiff, -10f, 10f);
+                //-10 â†’ -90Â°, 0 â†’ 0Â°, 10 â†’ 90Â° ã«ãƒãƒƒãƒ”ãƒ³ã‚°
+                float rawaccelerationAngle = Mathf.Lerp(-90f, 90f, (clamped_accelerationDiff + 10f) / 20f);
+                //ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°
+                accelerationAngle = pointSmoothingFactorL * accelerationAngle + (1f - pointSmoothingFactorL) * rawaccelerationAngle;
+                //Zè»¸å›è»¢
+                axis_acceleration.transform.localEulerAngles = new Vector3(0f, 0f, accelerationAngle);
+
+                float DegreeOfError = Mathf.Abs(3f * displacementDiff + 1f * speedDiff + 0f * accelerationDiff);
+
+
+                RemainingEnergy += (TargetOfError - DegreeOfError) * Time.deltaTime * 0.1f;
+
+                // 0ã€œ1ã®ç¯„å›²ã«åˆ¶é™ï¼ˆã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ï¼‰
+                RemainingEnergy = Mathf.Clamp(RemainingEnergy, -1f, 1f);
+
+                // ã‚¨ãƒãƒ«ã‚®ãƒ¼ãƒãƒ¼æ›´æ–°
+                if (energyBar != null)
+                {
+                    energyBar.fillAmount = RemainingEnergy;
+                    Debug.Log("ã‚¨ãƒãƒ«ã‚®ãƒ¼æ®‹é‡: " + RemainingEnergy);
+                }
+
+
+                // ãƒã‚¤ãƒ³ãƒˆåŠ ç®—å‡¦ç†
+                float PointGain = RemainingEnergy * deltaTime * 0.001f;
+                pointBuffer += PointGain;
+
+                if (pointBuffer >= 1f)
+                {
+                    int gained = Mathf.FloorToInt(pointBuffer);
+                    point += gained;
+                    pointBuffer -= gained;
+                }
             }
         }
         
@@ -155,10 +188,14 @@ public class EnergyManager : MonoBehaviour
 
         pointText.text = "Point: " + point.ToString();
 
-        // ‘O‰ñ‚Ì’lXV
+        // å‰å›ã®å€¤æ›´æ–°
         prevPlayerPos = currentPlayerPos;
         prevTargetPos = currentTargetPos;
         prevPlayerVelocity = playerVelocity;
         prevTargetVelocity = targetVelocity;
+
+        
     }
+
+
 }
