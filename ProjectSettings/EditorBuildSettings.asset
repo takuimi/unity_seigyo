@@ -5,12 +5,51 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/scene_5.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scene_4.1.unity
     guid: 51828d627b460b44b86ef3224ea93977
+  - enabled: 1
+    path: Assets/Scenes/prototype/Menu_0_1.unity
+    guid: 232dad82e3af97e47b438c4f15c1d14a
+  - enabled: 1
+    path: Assets/Scenes/prototype/Menu_0_2.unity
+    guid: fd5e171b94c88cf42ac988709ab5434c
+  - enabled: 1
+    path: Assets/Scenes/prototype/Menu_0_3.unity
+    guid: 5de380843888ea94eb9f6fc8f1ab9bbf
+  - enabled: 1
+    path: Assets/Scenes/prototype/Menu_0_4.unity
+    guid: ec1ba88894782134aa686126a3c72fc5
+  - enabled: 1
+    path: Assets/Scenes/prototype/Menu_0_5.unity
+    guid: 39d7486d564702c498e71025ee56e29e
+  - enabled: 1
+    path: Assets/Scenes/prototype/Menu_0_6.unity
+    guid: 746c6020809116d4f845a6f8944e19da
+  - enabled: 1
+    path: Assets/Scenes/prototype/Opening.unity
+    guid: 65a2171d76d01874f8202cbd7db397b9
+  - enabled: 1
+    path: Assets/Scenes/prototype/Stage_0_1.unity
+    guid: 1a6e6b980fa2c8d44aa87608db0b5ccb
+  - enabled: 1
+    path: Assets/Scenes/prototype/Stage_0_2.unity
+    guid: 540236bcd2c4694489789844481d7842
+  - enabled: 1
+    path: Assets/Scenes/prototype/Stage_0_3.unity
+    guid: 56a407802c4352c4d8a945546998cc32
+  - enabled: 1
+    path: Assets/Scenes/prototype/Stage_0_4.unity
+    guid: cad03d1de48e8a54bacf76926b0e4825
+  - enabled: 1
+    path: Assets/Scenes/prototype/Stage_0_5.unity
+    guid: ed80c2e3bfc1537429b40d2616fd7c36
+  - enabled: 1
+    path: Assets/Scenes/prototype/Stage_0_6.unity
+    guid: c0f6224f8aa8e0f40a7501cda5f5d55b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

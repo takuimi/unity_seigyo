@@ -1218,9 +1218,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 682600017}
         m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: LoadScene5
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1748,6 +1748,8 @@ MonoBehaviour:
   goal: {fileID: 420080267}
   energyBar: {fileID: 334609171}
   pointText: {fileID: 873070778}
+  pointResultO: {fileID: 1347692365}
+  pointResultC: {fileID: 945371798}
   axis_displacement: {fileID: 1583298247}
   axis_speed: {fileID: 1611939452}
   axis_acceleration: {fileID: 1718683572}
@@ -3119,7 +3121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impulseScale: 5
-  velocityText: {fileID: 0}
 --- !u!58 &1600606096
 CircleCollider2D:
   m_ObjectHideFlags: 0
