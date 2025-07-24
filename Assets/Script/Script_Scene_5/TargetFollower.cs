@@ -4,7 +4,7 @@ public class TargetFollower : MonoBehaviour
 {
     public GameObject targetBall;  // TargetBallオブジェクトをInspectorで指定
     [Tooltip("TargetBallからy軸上のオフセット量")]
-    public float yOffset_target = 33f;   // TargetBallの真上に表示するオフセット量
+    public float yOffset_target = 1.7f;   // TargetBallの真上に表示するオフセット量
 
     void Update()
     {

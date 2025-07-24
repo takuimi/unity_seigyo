@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class CameraManager : MonoBehaviour
 {
     public float leftLimit = 0.0f;    // 左スクロールリミット
-    public float rightLimit = 0.0f;   // 右スクロールリミット
+    public float rightLimit = 200.0f;   // 右スクロールリミット
     public float topLimit = 0.0f;     // 上スクロールリミット
     public float bottomLimit = 0.0f;  // 下スクロールリミット
 

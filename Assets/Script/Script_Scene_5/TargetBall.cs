@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 using TMPro;
 
-public class TargetController : MonoBehaviour
+public class TargetBall : MonoBehaviour
 {
     [Header("インパルスの積分値（=速度変化）")]
     [Tooltip("インパルスの強さを整数で指定（1以上）")]
-    public int impulseScale = 1;
+    public int impulseScale = 5;
     private bool hasMoved = false;
-
-    public TextMeshProUGUI velocityText;
 
     private Rigidbody2D rb;
 

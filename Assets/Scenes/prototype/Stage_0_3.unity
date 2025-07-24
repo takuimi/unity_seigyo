@@ -633,7 +633,7 @@ GameObject:
   - component: {fileID: 445874683}
   - component: {fileID: 445874682}
   m_Layer: 5
-  m_Name: energyGauge
+  m_Name: energyBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -708,7 +708,7 @@ GameObject:
   - component: {fileID: 534578650}
   - component: {fileID: 534578649}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: pointText (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -787,7 +787,7 @@ GameObject:
   - component: {fileID: 565108593}
   - component: {fileID: 565108592}
   - component: {fileID: 565108591}
-  - component: {fileID: 565108590}
+  - component: {fileID: 565108595}
   m_Layer: 7
   m_Name: TargetBall
   m_TagString: Untagged
@@ -795,18 +795,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &565108590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565108589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2443f119230544fb487c72fa92e717, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &565108591
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -940,6 +928,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &565108595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565108589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3c07a83aea591442b9249bf6649c3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rampGain: 2
 --- !u!1 &626324110
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,7 +953,7 @@ GameObject:
   - component: {fileID: 626324114}
   - component: {fileID: 626324113}
   - component: {fileID: 626324112}
-  - component: {fileID: 626324111}
+  - component: {fileID: 626324116}
   m_Layer: 6
   m_Name: Ball
   m_TagString: Player
@@ -960,18 +961,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &626324111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626324110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299e183510b478f4796f9360dbc9223a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &626324112
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1105,6 +1094,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &626324116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626324110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14122e367b7fd62408b0d2a3c5eb3876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &633892125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,9 +1403,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: LoadScene5
+      - m_Target: {fileID: 1963279408}
+        m_TargetAssemblyTypeName: ButtonManager_s0_3, Assembly-CSharp
+        m_MethodName: NextButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1500,10 +1501,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1609,10 +1610,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1832,6 +1833,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beebd9dc4e3ed9749acade306c35a0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ball: {fileID: 626324110}
+  yOffset_player: 0.65
 --- !u!212 &937497326
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2135,9 +2138,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1963279405}
-        m_TargetAssemblyTypeName: ButtonManager_s5, Assembly-CSharp
-        m_MethodName: LoadPauseScene
+      - m_Target: {fileID: 1963279408}
+        m_TargetAssemblyTypeName: ButtonManager_s0_3, Assembly-CSharp
+        m_MethodName: BackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2351,6 +2354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8241a801e2ee24bbbe756b1d081d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetBall: {fileID: 565108589}
+  yOffset_target: 1.7
 --- !u!212 &1153378453
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2983,10 +2988,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3384,6 +3389,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530177aca87af834fa990236c715da29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftLimit: 0
+  rightLimit: 200
+  topLimit: 0
+  bottomLimit: 0
 --- !u!114 &1889562565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3932,7 +3941,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1963279407}
   - component: {fileID: 1963279406}
-  - component: {fileID: 1963279405}
+  - component: {fileID: 1963279408}
   m_Layer: 0
   m_Name: GameDirector
   m_TagString: Untagged
@@ -3940,18 +3949,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1963279405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963279404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ab7325589ab76498b248bc5d6e013f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1963279406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3964,6 +3961,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68210abddc6ddbc46a55d11e068e36ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 937497324}
+  target: {fileID: 1153378451}
+  goal: {fileID: 1926635022}
+  energyBar: {fileID: 445874682}
+  pointText: {fileID: 534578649}
+  pointResultO: {fileID: 904118651}
+  pointResultC: {fileID: 336762891}
+  axis_displacement: {fileID: 2124638154}
+  axis_speed: {fileID: 966477097}
+  axis_acceleration: {fileID: 121475248}
+  gameOverCanvas: {fileID: 1633509101}
+  gameClearCanvas: {fileID: 891508252}
+  TargetOfError: 0.5
+  pointSmoothingFactorS: 0.765
+  pointSmoothingFactorM: 0.883
+  pointSmoothingFactorL: 0.994
+  playerVelocity: {x: 0, y: 0, z: 0}
 --- !u!4 &1963279407
 Transform:
   m_ObjectHideFlags: 0
@@ -3979,6 +3993,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1963279408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963279404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 103b11d99e3f47c488ac83ccba3dd827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startText: {fileID: 1134178270}
 --- !u!1 &1991945389
 GameObject:
   m_ObjectHideFlags: 0
@@ -4332,9 +4359,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1963279405}
-        m_TargetAssemblyTypeName: ButtonManager_s5, Assembly-CSharp
-        m_MethodName: LoadPauseScene
+      - m_Target: {fileID: 1963279408}
+        m_TargetAssemblyTypeName: ButtonManager_s0_3, Assembly-CSharp
+        m_MethodName: BackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4462,16 +4489,16 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 891508256}
-  - {fileID: 937497327}
-  - {fileID: 1963279407}
-  - {fileID: 111738192}
-  - {fileID: 626324115}
-  - {fileID: 1926635025}
-  - {fileID: 1889562568}
-  - {fileID: 1991945393}
-  - {fileID: 565108594}
-  - {fileID: 750489597}
-  - {fileID: 1153378454}
   - {fileID: 1878840350}
+  - {fileID: 111738192}
+  - {fileID: 1889562568}
+  - {fileID: 937497327}
+  - {fileID: 1153378454}
+  - {fileID: 626324115}
+  - {fileID: 565108594}
+  - {fileID: 1926635025}
+  - {fileID: 1991945393}
+  - {fileID: 750489597}
   - {fileID: 1633509105}
+  - {fileID: 891508256}
+  - {fileID: 1963279407}

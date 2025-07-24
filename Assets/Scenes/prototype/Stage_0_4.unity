@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 53104683}
   - component: {fileID: 53104682}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: PointText (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,6 +454,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beebd9dc4e3ed9749acade306c35a0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ball: {fileID: 1735683181}
+  yOffset_player: 0.65
 --- !u!212 &414631255
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -537,7 +539,7 @@ GameObject:
   - component: {fileID: 456694467}
   - component: {fileID: 456694466}
   m_Layer: 5
-  m_Name: GmmeOver
+  m_Name: GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -572,10 +574,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -989,6 +991,7 @@ GameObject:
   - component: {fileID: 546282337}
   - component: {fileID: 546282336}
   - component: {fileID: 546282335}
+  - component: {fileID: 546282340}
   m_Layer: 7
   m_Name: TargetBall
   m_TagString: Untagged
@@ -1008,6 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2443f119230544fb487c72fa92e717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  impulseScale: 5
 --- !u!58 &546282336
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1134,13 +1138,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 546282334}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.35, y: -2.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &546282340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546282334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9037b58f50db64c80006e8c572a31c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impulseScale: 5
 --- !u!1 &625907421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,9 +1315,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1236493738}
-        m_TargetAssemblyTypeName: ButtonManager_s5, Assembly-CSharp
-        m_MethodName: LoadPauseScene
+      - m_Target: {fileID: 1236493741}
+        m_TargetAssemblyTypeName: ButtonManager_s0_4, Assembly-CSharp
+        m_MethodName: BackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1396,10 +1413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1676,9 +1693,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: LoadScene5
+      - m_Target: {fileID: 1236493741}
+        m_TargetAssemblyTypeName: ButtonManager_s0_4, Assembly-CSharp
+        m_MethodName: NextButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2452,7 +2469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1236493740}
   - component: {fileID: 1236493739}
-  - component: {fileID: 1236493738}
+  - component: {fileID: 1236493741}
   m_Layer: 0
   m_Name: GameDirector
   m_TagString: Untagged
@@ -2460,18 +2477,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1236493738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1236493737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ab7325589ab76498b248bc5d6e013f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1236493739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2484,6 +2489,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68210abddc6ddbc46a55d11e068e36ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 414631253}
+  target: {fileID: 1739354635}
+  goal: {fileID: 998065463}
+  energyBar: {fileID: 1830352985}
+  pointText: {fileID: 53104682}
+  pointResultO: {fileID: 513932660}
+  pointResultC: {fileID: 496709730}
+  axis_displacement: {fileID: 303034117}
+  axis_speed: {fileID: 1020349431}
+  axis_acceleration: {fileID: 1458043203}
+  gameOverCanvas: {fileID: 456694465}
+  gameClearCanvas: {fileID: 1558566186}
+  TargetOfError: 0.5
+  pointSmoothingFactorS: 0.787
+  pointSmoothingFactorM: 0.927
+  pointSmoothingFactorL: 0.981
+  playerVelocity: {x: 0, y: 0, z: 0}
 --- !u!4 &1236493740
 Transform:
   m_ObjectHideFlags: 0
@@ -2492,13 +2514,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236493737}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 808.7012, y: 432.65573, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1236493741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236493737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a4493deb33eef439de7b19df7caccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startText: {fileID: 858652958}
 --- !u!1 &1258681858
 GameObject:
   m_ObjectHideFlags: 0
@@ -3013,7 +3048,7 @@ GameObject:
   - component: {fileID: 1558566188}
   - component: {fileID: 1558566187}
   m_Layer: 5
-  m_Name: GmmeClear
+  m_Name: GameClear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3048,10 +3083,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3273,6 +3308,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530177aca87af834fa990236c715da29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftLimit: 0
+  rightLimit: 200
+  topLimit: 0
+  bottomLimit: 0
 --- !u!114 &1671569511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3478,7 +3517,7 @@ GameObject:
   - component: {fileID: 1735683185}
   - component: {fileID: 1735683184}
   - component: {fileID: 1735683183}
-  - component: {fileID: 1735683182}
+  - component: {fileID: 1735683187}
   m_Layer: 6
   m_Name: Ball
   m_TagString: Player
@@ -3486,18 +3525,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1735683182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1735683181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299e183510b478f4796f9360dbc9223a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &1735683183
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3631,6 +3658,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1735683187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735683181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a44b8ef33a568459d552f98aeea093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1739354635
 GameObject:
   m_ObjectHideFlags: 0
@@ -3661,6 +3700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8241a801e2ee24bbbe756b1d081d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetBall: {fileID: 546282334}
+  yOffset_target: 1.7
 --- !u!212 &1739354637
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3743,7 +3784,7 @@ GameObject:
   - component: {fileID: 1830352986}
   - component: {fileID: 1830352985}
   m_Layer: 5
-  m_Name: energyGauge
+  m_Name: energyBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3888,9 +3929,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1236493738}
-        m_TargetAssemblyTypeName: ButtonManager_s5, Assembly-CSharp
-        m_MethodName: LoadPauseScene
+      - m_Target: {fileID: 1236493741}
+        m_TargetAssemblyTypeName: ButtonManager_s0_4, Assembly-CSharp
+        m_MethodName: BackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4462,16 +4503,16 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1558566190}
-  - {fileID: 414631256}
-  - {fileID: 1236493740}
   - {fileID: 996199339}
-  - {fileID: 1735683186}
-  - {fileID: 998065466}
   - {fileID: 1671569514}
-  - {fileID: 1230156636}
-  - {fileID: 546282339}
-  - {fileID: 757076784}
-  - {fileID: 1739354638}
   - {fileID: 1995922380}
+  - {fileID: 414631256}
+  - {fileID: 1739354638}
+  - {fileID: 1735683186}
+  - {fileID: 546282339}
+  - {fileID: 998065466}
+  - {fileID: 1230156636}
+  - {fileID: 757076784}
   - {fileID: 456694469}
+  - {fileID: 1558566190}
+  - {fileID: 1236493740}
